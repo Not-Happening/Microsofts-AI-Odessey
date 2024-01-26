@@ -1,0 +1,235 @@
+Language detection - determining the language in which text is written.
+
+the Azure AI Language Detection API helps figure out the language used in a piece of text. This can be useful for situations where you have text in an unknown language, like in a chatbot where users might speak different languages.
+
+Key points:
+
+->It analyzes text and tells you what language it is.
+->The API provides a confidence score, indicating how sure it is about the detected language (a score between 0 and 1).
+->It's handy for applications like chatbots, where you want to understand the user's language and respond accordingly.
+->The text you analyze should be less than 5,120 characters, and you can't have more than 1,000 pieces of text to analyze at once.
+->You can also give a hint about the country to improve accuracy if needed.
+
+{
+    "kind": "LanguageDetection",
+    "parameters": {
+        "modelVersion": "latest"
+    },
+    "analysisInput":{
+        "documents":[
+              {
+                "id": "1",
+                "text": "Hello world",
+                "countryHint": "US"
+              },
+              {
+                "id": "2",
+                "text": "Bonjour tout le monde"
+              }
+        ]
+    }
+}
+
+
+OUTPUT:
+ {   "kind": "LanguageDetectionResults",
+    "results": {
+        "documents": [
+          {
+            "detectedLanguage": {
+              "confidenceScore": 1,
+              "iso6391Name": "en",
+              "name": "English"
+            },
+            "id": "1",
+            "warnings": []
+          },
+          {
+            "detectedLanguage": {
+              "confidenceScore": 1,
+              "iso6391Name": "fr",
+              "name": "French"
+            },
+            "id": "2",
+            "warnings": []
+          }
+        ],
+        "errors": [],
+        "modelVersion": "2022-10-01"
+    }
+}
+
+
+If you pass in a document that has multilingual content, the service will behave a bit differently. 
+Mixed language content within the same document returns the language with the largest representation in the content and the confidence level will be relatively low.
+
+EXAMPLE:
+{
+  "documents": [
+    {
+      "id": "1",
+      "text": "Hello, I would like to take a class at your University. ¿Se ofrecen clases en español? Es mi primera lengua y más fácil para escribir. Que diriez-vous des cours en français?"
+    }
+  ]
+}
+
+OUTPUT:
+{
+    "documents": [
+        {
+            "id": "1",
+            "detectedLanguage": {
+                "name": "Spanish",
+                "iso6391Name": "es",
+                "confidenceScore": 0.9375
+            },
+            "warnings": []
+        }
+    ],
+    "errors": [],
+    "modelVersion": "2022-10-01"
+}
+
+ if the language detection system can't understand or read the text you submit because of issues like character encoding problems,
+ it won't be able to figure out the language. In such cases, the response will show "(unknown)" for the language and an associated ISO code, 
+ and the confidence score will be 0, indicating low confidence due to the difficulty in analyzing the text.
+
+OUTPUT:
+{
+    "documents": [
+        {
+            "id": "1",
+            "detectedLanguage": {
+                "name": "(Unknown)",
+                "iso6391Name": "(Unknown)",
+                "confidenceScore": 0.0
+            },
+            "warnings": []
+        }
+    ],
+    "errors": [],
+    "modelVersion": "2022-10-01"
+}
+
+
+2- KEY PHRASE EXTRACTION
+
+Key phrase extraction is the process of evaluating the text of a document, or documents, and then identifying the main points around the context of the document(s).
+Key phrase extraction works best for larger documents (the maximum size that can be analyzed is 5,120 characters).
+
+{
+    "kind": "KeyPhraseExtraction",
+    "parameters": {
+        "modelVersion": "latest"
+    },
+    "analysisInput":{
+        "documents":[
+            {
+              "id": "1",
+              "language": "en",
+              "text": "You must be the change you wish 
+                       to see in the world."
+            },
+            {
+              "id": "2",
+              "language": "en",
+              "text": "The journey of a thousand miles 
+                       begins with a single step."
+            }
+        ]
+    }
+}
+
+The ressponse will be something like this 
+{
+    "kind": "KeyPhraseExtractionResults",
+    "results": {
+    "documents": [   
+        {
+         "id": "1",
+         "keyPhrases": [
+           "change",
+           "world"
+         ],
+         "warnings": []
+       },
+       {
+         "id": "2",
+         "keyPhrases": [
+           "miles",
+           "single step",
+           "journey"
+         ],
+         "warnings": []
+       }
+],
+    "errors": [],
+    "modelVersion": "2021-06-01"
+    }
+}
+
+SENTIMENT ANALYSIS:
+
+Sentiment analysis is used to evaluate how positive or negative a text document is, which can be useful in various workloads, such as:
+Evaluating a movie, book, or product by quantifying sentiment based on reviews.
+Prioritizing customer service responses to correspondence received through email or social media messaging.
+
+{
+  "kind": "SentimentAnalysis",
+  "parameters": {
+    "modelVersion": "latest"
+  },
+  "analysisInput": {
+    "documents": [
+      {
+        "id": "1",
+        "language": "en",
+        "text": "Good morning!"
+      }
+    ]
+  }
+}
+
+OUTPUT:
+{
+  "kind": "SentimentAnalysisResults",
+  "results": {
+    "documents": [
+      {
+        "id": "1",
+        "sentiment": "positive",
+        "confidenceScores": {
+          "positive": 0.89,
+          "neutral": 0.1,
+          "negative": 0.01
+        },
+        "sentences": [
+          {
+            "sentiment": "positive",
+            "confidenceScores": {
+              "positive": 0.89,
+              "neutral": 0.1,
+              "negative": 0.01
+            },
+            "offset": 0,
+            "length": 13,
+            "text": "Good morning!"
+          }
+        ],
+        "warnings": []
+      }
+    ],
+    "errors": [],
+    "modelVersion": "2022-11-01"
+  }
+}
+
+-> Sentence sentiment is based on confidence scores for positive, negative, and neutral classification values between 0 and 1.
+Overall document sentiment is based on sentences:
+If all sentences are neutral, the overall sentiment is neutral.
+If sentence classifications include only positive and neutral, the overall sentiment is positive.
+If the sentence classifications include only negative and neutral, the overall sentiment is negative.
+If the sentence classifications include positive and negative, the overall sentiment is mixed.
+
+
+
