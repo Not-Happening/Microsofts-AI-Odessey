@@ -1,0 +1,31 @@
+Azure AI Language offers a feature that allows you to create a database of questions and their corresponding answers.
+This database can be used by applications, like chatbots, to provide responses when users ask questions in everyday language. 
+The information for this database can come from various sources, such as FAQ pages on websites, structured text files like brochures, or even pre-defined casual conversation examples.
+This capability helps in making applications more conversational and responsive to user queries.
+
+
+QUESTION ANSWERING AND LANGUAGE UNDERSTANDING
+Use the question answering knowledge base when you have specific questions and want direct answers.
+Use the conversational language understanding feature when you want a more natural and interactive chat with your computer.(like a normal coversation)
+
+MULTI TURN CONVERSATIONS:
+multi turn converdations are the kind of conversations where we have to question ourselves again to answer the question.
+if A asks how to cancel reservation
+B must ask a follow up question if it is hotel or plane.
+When setting up a system for handling questions and answers, you can make it understand multi-turn conversations in two ways.
+For instance, if someone asks, "How can I cancel a reservation?" and the system needs more details,
+it can be taught to ask follow-up questions like "Is it about a hotel or a flight?" 
+The response can then include information like "Cancellation policies vary based on the type of reservation,"
+along with clickable links for details on canceling flights or hotels. 
+This helps the system provide relevant information in the context of the ongoing conversation.
+
+TESTING AND PUBLISHING A KNOWLEDGE BASE:
+after training a language model with a knowledge base we must test it before publishing it for use
+in Azure we can test it interactively with language Studio
+
+After creating and testing a knowledge base we should improve its quality(performance)
+Active learning can help you make continuous improvements to get better at answering user questions correctly over time. 
+People often ask questions that are phrased differently, but ultimately have the same meaning.
+Active learning can help in situations like this because it enables you to consider alternate questions to each question and answer pair. 
+Active learning is enabled by default.
+
