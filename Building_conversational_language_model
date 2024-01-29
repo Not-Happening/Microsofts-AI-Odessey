@@ -1,0 +1,116 @@
+Introduction:
+Natural language processing (NLP) is a common AI problem in which 
+software must be able to work with text or speech in the natural language form that a human user would write or speak.
+Within the broader area of NLP, natural language understanding (NLU) deals with the problem of determining semantic meaning from natural language - usually by using a trained language model.
+
+Azure AI Language service features fall into two categories: Pre-configured features, and Learned features
+
+PRE_CONFIGURED FEATURES:
+Available without model labeling or training.
+Summarization: Summarizes documents or conversations into key sentences.
+Named Entity Recognition: Identifies entities like people, places, or companies.
+PII Detection: Identifies and redacts sensitive information like email addresses or names.
+Key Phrase Extraction
+Sentiment Analysis
+Language Detection
+
+LEARNED FEATURES:
+Require labeling data, training, and deployment.
+Conversational Language Understanding (CLU): Custom feature predicting overall intent and extracting information.
+Custom Named Entity Recognition: Extracts specified entities from unstructured text using custom labeled data.
+Custom Text Classification: Classifies text or documents into custom-defined groups.
+
+DEFINE INTENTS, UTTERANCES AND ENTITES
+
+GetTime:
+"What time is it?"
+"What is the time?"
+"Tell me the time"
+
+GetWeather:
+"What is the weather forecast?"
+"Do I need an umbrella?"
+"Will it snow?"
+
+TurnOnDevice
+"Turn the light on."
+"Switch on the light."
+"Turn on the fan"
+
+None:
+"Hello"
+"Goodbye"
+
+here GetTime, GetWeather, TurnOnDevice are INTENTS and the phrases under them are called UTTERANCES
+
+
+**DEFINING INTENTS IN A MODEL:**
+Identify and define the intents your model needs to understand based on the domain and user interactions.
+Include a None intent for utterances that don't require a specific action or fall outside the model's domain.
+
+**CAPTURING EXAMPLE UTTERANCES:**
+Gather various examples for each intent, including different ways of saying the same thing.
+Vary utterance length and the position of the noun or subject.
+Include correct and incorrect grammar in examples for diverse training data.
+
+**GUIDELINES FOR LABELLED DATA:**
+Precision, consistency, and completeness are crucial for model performance.
+Label entities precisely to their correct type, excluding unnecessary data.
+Maintain consistency in labeling the same entity across all utterances.
+Ensure completeness by labeling all instances of the entity in all utterances.
+
+**ENTITIES IN CONTEXT:**
+Entities add specific context to intents.
+Example: Defining a "TurnOnDevice" intent with entities specifying different devices.
+The success of the model relies on thoughtful intent definition, diverse training data, and precise, consistent, and complete labeling of entities.
+
+
+**TYPES OF ENTITIES:**
+
+1. **LEARNED ENTITIES:**
+   - Most flexible entity type.
+   - Defined with a suitable name.
+   - Associated with words or phrases in training utterances.
+   - During training, the model learns to match appropriate elements in utterances with the entity.
+
+2. **LIST ENTITIES:**
+   - Useful when an entity has a specific set of possible values (e.g., days of the week).
+   - Can include synonyms in the definition.
+   - Example: A "DayOfWeek" entity with values like "Sunday," "Monday," and synonyms like "Sun," "Mon."
+
+3. **PREBUILT ENTITIES:**
+   - Useful for common types such as numbers, datetimes, and names.
+   - Automatically detects values like "6" or organizations like "Microsoft" when prebuilt components are added.
+
+
+
+"Turn on the kitchen light"
+"Is the kitchen light on?"
+"Turn off the kitchen light"
+these are same utterances but still come undr different entities TurnOnDevice, GetDeviceStatus, and TurnOffDevice
+
+To correctly train your model, provide a handful of examples of each intent that specify the different formats of utterances.
+TurnOnDevice:
+"Turn on the {DeviceName}"
+"Switch on the {DeviceName}"
+"Turn the {DeviceName} on"
+GetDeviceStatus:
+"Is the {DeviceName} on[?]"
+TurnOffDevice:
+"Turn the {DeviceName} off"
+"Switch off the {DeviceName}"
+"Turn off the {DeviceName}"
+
+-> You can create your own language models by defining all the intents and utterances it requires,
+but often you can use prebuilt components to detect common entities such as numbers, emails, URLs, or choices.
+
+**Train, test, publish, and review a conversational language understanding model**
+Creating a model is an iterative process with the following activities:
+
+1->Train a model to learn intents and entities from sample utterances.
+2->Test the model interactively or using a testing dataset with known labels
+3->Deploy a trained model to a public endpoint so client apps can use it
+4->Review predictions and iterate on utterances to train your model
+
+
+
