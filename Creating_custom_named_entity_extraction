@@ -1,0 +1,63 @@
+** Understand custom named entity recognition **
+Custom NER is an Azure API service that looks at documents, identifies, and extracts user defined entities. 
+These entities could be anything from names and addresses from bank statements to knowledge mining to improve search results.
+
+** Considerations for data selection and refining entities **
+High quality data will let you spend less time refining and yield better results from your model.
+
+->Diversity - use as diverse of a dataset as possible without losing the real-life distribution expected in the real data.
+You'll want to use sample data from as many sources as possible, each with their own formats and number of entities.
+It's best to have your dataset represent as many different sources as possible.
+
+->Distribution - use the appropriate distribution of document types.
+A more diverse dataset to train your model will help your model avoid learning incorrect relationships in the data.
+
+->Accuracy - use data that is as close to real world data as possible. 
+Fake data works to start the training process, but it likely will differ from real data in ways that can cause your model to not extract correctly.
+
+
+Label your data
+Labeling, or tagging, your data correctly is an important part of the process to create a custom entity extraction model. Labels identify examples of specific entities in text used to train the model. Three things to focus on are:
+Consistency - Label your data the same way across all files for training. Consistency allows your model to learn without any conflicting inputs.
+Precision - Label your entities consistently, without unnecessary extra words. Precision ensures only the correct data is included in your extracted entity.
+Completeness - Label your data completely, and don't miss any entities. Completeness helps your model always recognize the entities present.
+
+Field	                Description
+documents	            Array of labeled documents
+location	            Path to file within container connected to the project
+language	            Language of the file
+entities	            Array of present entities in the current document
+regionOffset	        Inclusive character position for start of text
+regionLength	        Length in characters of the data used in training
+category	            Name of entity to extract
+labels	              Array of labeled entities in the files
+offset	              Inclusive character position for start of entity
+length	              Length in characters of the entity
+dataset	              Which dataset the file is assigned to
+
+
+** TRAINING AND EVA;UATING THE MODEL **
+
+
+Metric	              Description
+Precision	            The ratio of successful entity recognitions to all attempted recognitions. A high score means that as long as the entity is recognized, it's labeled correctly.
+Recall	              The ratio of successful entity recognitions to the actual number of entities in the document. A high score means it finds the entity or entities well, regardless of if it assigns them the right label
+F1 score	            Combination of precision and recall providing a single scoring metric
+
+
+If precision is low but recall is high, it means that the model recognizes the entity well but doesn't label it as the correct entity type.
+If precision is high but recall is low, it means that the model doesn't always recognize the entity, but when the model extracts the entity, the correct label is applied.
+
+Confusion matrix
+On the same View model details page, there's another tab on the top for the Confusion matrix.
+This view provides a visual table of all the entities and how each performed, giving a complete view of the model and where it's falling short.
+
+The confusion matrix allows you to visually identify where to add data to improve your model's performance.
+
+
+
+
+
+
+
+
