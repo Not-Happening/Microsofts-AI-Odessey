@@ -1,0 +1,6 @@
+ ** Develop natural language processing solutions with Azure AI Services **
+Azure AI Translator provides a multilingual text translation API that you can use for:
+->Language detection.
+->One-to-many translation.
+->Script transliteration (converting text from its native script to an alternative script).
+
